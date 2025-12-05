@@ -24,10 +24,7 @@ if ($request.url.indexOf(vipPath) != -1) {
     // 动作 1：把外层的 isVip 改成 true
     obj['data']['isVip'] = true;
 
-    // 动作 2：关键差异在这里！！
-    // 他是在 data.vip 下面加了一个 'expire' 字段！
-    // 而不是 expireTime，也不是 vip.expireTime
-    obj['data']['vip']['expire'] = "2099-09-09T05:41:38.139Z";
+    obj['data']['vip']['expire'] = "2098-09-09T05:41:38.139Z";
 
     body = JSON.stringify(obj);
 }
