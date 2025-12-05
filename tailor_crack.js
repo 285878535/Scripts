@@ -15,18 +15,20 @@ hostname = tailor.tomax.xyz
 */
 
 // --- 以下是脚本的实际运行逻辑 ---
-
+// 判断是不是在这个 URL 里面
 var body = $response.body;
 var obj = JSON.parse(body);
-
-if (obj && obj.data) {
-    // 1. 基础会员开关
-    obj.data.isVip = true;
-    obj.data.coin = 999999;
+const vipPath = "/api/users/fetch/info";
+if ($request.url.indexOf(vipPath) != -1) {
     
-  
+    // 动作 1：把外层的 isVip 改成 true
+    obj['data']['isVip'] = true;
 
-   
+    // 动作 2：关键差异在这里！！
+    // 他是在 data.vip 下面加了一个 'expire' 字段！
+    // 而不是 expireTime，也不是 vip.expireTime
+    obj['data']['vip']['expire'] = "2099-09-09T05:41:38.139Z";
+
+    body = JSON.stringify(obj);
 }
-
-$done({body: JSON.stringify(obj)});
+$done({ body: body });
